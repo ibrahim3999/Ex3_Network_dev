@@ -114,30 +114,21 @@ int main(int argc , char *argv[]){
 
     int port=-1;
     char *algo=NULL;
-     // Define short and long options
-    static struct option long_options[] = {
-        {"algo", required_argument, 0, 'a'},
-        {0, 0, 0, 0}
-    };
 
-    // Parse command line arguments 
-    int opt;
-    while((opt = getopt_long(argc,argv, "p:",long_options,NULL)) != -1){
-        switch (opt)
-        {
-        case 'p':
-            port = atoi(optarg);
-            break;
-        case 'a':
-            algo=optarg;
-            break;
-    
-        default:
-            fprintf(stderr, "Usage: %s -p PORT -algo ALGO\n", argv[0]);
-            exit(EXIT_FAILURE);
-        }
+     if (argc != 5) {
+        fprintf(stderr, "Usage: %s -p PORT -algo ALGORITHM \n", argv[0]);
+        exit(EXIT_FAILURE);
     }
-     if (port == -1 || algo[0] == '\0') {
+    for (int i = 1; i < argc; i += 1) {
+    
+        if (strcmp(argv[i], "-p") == 0) {
+            port = atoi(argv[i + 1]);
+        } else if (strcmp(argv[i], "-algo") == 0) {
+            algo = argv[i + 1];
+        } 
+    }
+
+    if (port == -1 || algo[0] == '\0') {
         fprintf(stderr, "Both port and algorithm must be provided.\n");
         fprintf(stderr, "Usage: %s -p PORT -algo ALGO\n", argv[0]);
         exit(EXIT_FAILURE);
