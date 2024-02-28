@@ -25,41 +25,32 @@ int createSocket();
 void generateRandomFile(const char *filename ,int size);
 
 int main(int argc , char *argv[]) {
-      int port=-1;
+    int port=-1;
     char *algo=NULL;
     char *IP=NULL;
-     // Define short and long options
-    static struct option long_options[] = {
-        {"algo", required_argument, 0, 'a'},
-        {"ip", required_argument, 0, 'i'},
-        {0, 0, 0, 0}
-    };
+    if (argc != 7) {
+        printf("Usage: ./sender -ip <IP_ADDRESS> -p <PORT> -algo <ALGORITHM>\n");
+        return 1;
+    }
 
-    // Parse command line arguments 
-    int opt;
-    while((opt = getopt_long(argc,argv, "p:i:",long_options,NULL)) != -1){
-        switch (opt)
-        {
-        case 'i':
-            IP=optarg;
-        case 'p':
-            port = atoi(optarg);
-            break;
-        case 'a':
-            algo=optarg;
-            break;
-    
-        default:
-            fprintf(stderr, "Usage: %s -p PORT -algo ALGO\n", argv[0]);
-            exit(EXIT_FAILURE);
+    for (int i = 1; i < argc; i += 2) {
+        if (strcmp(argv[i], "-ip") == 0) {
+            IP = argv[i + 1];
+        } else if (strcmp(argv[i], "-p") == 0) {
+            port = atoi(argv[i + 1]);
+        } else if (strcmp(argv[i], "-algo") == 0) {
+            algo = argv[i + 1];
+        } else {
+            printf("Unknown option: %s\n", argv[i]);
+            return 1;
         }
     }
 
-    if (port == -1 || algo[0] == '\0') {
-        fprintf(stderr, "Both port and algorithm must be provided.\n");
-        fprintf(stderr, "Usage: %s -p PORT -algo ALGO\n", argv[0]);
+    if (IP == NULL || port == -1 || algo == NULL) {
+        printf("All options (-ip, -p, -algo) are required.\n");
         exit(EXIT_FAILURE);
     }
+
     printf("Port: %d\n", port);
     printf("Algorithm: %s\n", algo);
     printf("IP: %s\n", IP);
