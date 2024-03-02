@@ -17,7 +17,7 @@
 #include <getopt.h>
 
 #define FILE_SIZE 2*1048576 
-#define XOR "0101 0001 1100 0000"
+#define XOR "0000 0000 0000 0000"
 #define M_Authentication_SIZE 21
 
 int send_file(int client_socket, FILE *file, char * algo);
