@@ -19,7 +19,7 @@
 //#define SERVER_PORT 12345
 #define SERVER_IP "127.0.0.1"
 #define FILE_SIZE 2*1048576 
-#define XOR "0101 0001 1100 0000"
+#define XOR "0000 0000 0000 0000"
 #define M_Authentication_SIZE 21
 
 
@@ -242,7 +242,6 @@ int main(int argc , char *argv[]){
                     }
 
             }
-
 
         }
         
